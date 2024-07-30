@@ -20,10 +20,10 @@ func SaveMetaRuleSet(buf []byte, b string, f string, outputPath string) error {
 	if err != nil {
 		return err
 	}
-	RP.ConvertToMrs(buf, behavior, format, targetFile)
-	err = targetFile.Close()
+	err = RP.ConvertToMrs(buf, behavior, format, targetFile)
+	closeErr := targetFile.Close()
 	if err != nil {
 		return err
 	}
-	return nil
+	return closeErr
 }

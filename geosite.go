@@ -13,7 +13,6 @@ import (
 	"gopkg.in/yaml.v3"
 
 	"github.com/metacubex/mihomo/component/geodata/router"
-	"github.com/sagernet/sing-box/option"
 	"github.com/spf13/cobra"
 )
 
@@ -171,11 +170,12 @@ func convertSite(cmd *cobra.Command, args []string) error {
 			if err != nil {
 				fmt.Println(code, " output err: ", err)
 			}
-			err = os.WriteFile(outDir+"/"+code+".list", []byte(strings.Join(domain, "\n")), 0755)
+			domainOut = []byte(strings.Join(domain, "\n"))
+			err = os.WriteFile(outDir+"/"+code+".list", domainOut, 0755)
 			if err != nil {
 				fmt.Println(code, " output err: ", err)
 			}
-			err = meta.SaveMetaRuleSet(domainOut, "domain", "yaml", outDir+"/"+code+".mrs")
+			err = meta.SaveMetaRuleSet(domainOut, "domain", "text", outDir+"/"+code+".mrs")
 			if err != nil {
 				fmt.Println(code, " output err: ", err)
 			}
@@ -190,15 +190,16 @@ func convertSite(cmd *cobra.Command, args []string) error {
 			if err != nil {
 				fmt.Println(code, " output err: ", err)
 			}
-			err = os.WriteFile(outDir+"/classical/"+code+".list", []byte(strings.Join(classical[code], "\n")), 0755)
+			classicalOut = []byte(strings.Join(classical[code], "\n"))
+			err = os.WriteFile(outDir+"/classical/"+code+".list", classicalOut, 0755)
 			if err != nil {
 				fmt.Println(code, " output err: ", err)
 			}
-			// meta.SaveMetaRuleSet(classicalOut, "classical", "yaml", outDir+"/classical/"+code+".mrs")
+			// meta.SaveMetaRuleSet(classicalOut, "classical", "text", outDir+"/classical/"+code+".mrs")
 		}
 	case "sing-box":
 		for code, domain := range domainFull {
-			domainRule := []option.DefaultHeadlessRule{
+			domainRule := []sing.DefaultHeadlessRule{
 				{
 					Domain:        domain,
 					DomainKeyword: domainKeyword[code],

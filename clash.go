@@ -10,7 +10,6 @@ import (
 
 	"github.com/metacubex/meta-rules-converter/output/sing"
 
-	"github.com/sagernet/sing-box/option"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v3"
 )
@@ -113,7 +112,7 @@ func convertClash(cmd *cobra.Command, args []string) error {
 		for name, domain := range domainFull {
 			os.MkdirAll(outDir+"/"+name, 0755)
 			if len(domain) != 0 || len(domainSuffix[name]) != 0 || len(domainKeyword[name]) != 0 || len(domainRegex[name]) != 0 {
-				domainRule := []option.DefaultHeadlessRule{
+				domainRule := []sing.DefaultHeadlessRule{
 					{
 						Domain:        domain,
 						DomainKeyword: domainKeyword[name],
@@ -124,7 +123,7 @@ func convertClash(cmd *cobra.Command, args []string) error {
 				sing.SaveSingRuleSet(domainRule, outDir+"/"+name+"/domain")
 			}
 			if len(ipCIDR[name]) != 0 {
-				ipRule := []option.DefaultHeadlessRule{
+				ipRule := []sing.DefaultHeadlessRule{
 					{
 						IPCIDR: ipCIDR[name],
 					},
@@ -132,7 +131,7 @@ func convertClash(cmd *cobra.Command, args []string) error {
 				sing.SaveSingRuleSet(ipRule, outDir+"/"+name+"/ip")
 			}
 			if len(processName[name]) != 0 || len(packageName[name]) != 0 || len(processPath[name]) != 0 {
-				processRule := []option.DefaultHeadlessRule{
+				processRule := []sing.DefaultHeadlessRule{
 					{
 						ProcessName: processName[name],
 						PackageName: packageName[name],
@@ -142,14 +141,14 @@ func convertClash(cmd *cobra.Command, args []string) error {
 				sing.SaveSingRuleSet(processRule, outDir+"/"+name+"/process")
 			}
 			if len(dstPort[name]) != 0 {
-				otherRule := []option.DefaultHeadlessRule{
+				otherRule := []sing.DefaultHeadlessRule{
 					{
 						Port: dstPort[name],
 					},
 				}
 				sing.SaveSingRuleSet(otherRule, outDir+"/"+name+"/other")
 			}
-			classicalRule := []option.DefaultHeadlessRule{
+			classicalRule := []sing.DefaultHeadlessRule{
 				{
 					Domain:        domainFull[name],
 					DomainKeyword: domainKeyword[name],

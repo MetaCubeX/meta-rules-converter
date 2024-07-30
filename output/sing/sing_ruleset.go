@@ -12,7 +12,9 @@ import (
 	"github.com/sagernet/sing/common/json"
 )
 
-func SaveSingRuleSet(rules []option.DefaultHeadlessRule, outputPath string) error {
+type DefaultHeadlessRule = option.DefaultHeadlessRule
+
+func SaveSingRuleSet(rules []DefaultHeadlessRule, outputPath string) error {
 	plainRuleSet := option.PlainRuleSetCompat{
 		Version: 1,
 		Options: option.PlainRuleSet{

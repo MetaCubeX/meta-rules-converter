@@ -14,7 +14,6 @@ import (
 	"gopkg.in/yaml.v3"
 
 	"github.com/metacubex/mihomo/component/geodata/router"
-	"github.com/sagernet/sing-box/option"
 	"github.com/spf13/cobra"
 )
 
@@ -109,11 +108,12 @@ func convertIP(cmd *cobra.Command, args []string) error {
 			if err != nil {
 				fmt.Println(code, " output err: ", err)
 			}
-			err = os.WriteFile(outDir+"/"+code+".list", []byte(strings.Join(cidrs, "\n")), 0755)
+			ipcidrOut = []byte(strings.Join(cidrs, "\n"))
+			err = os.WriteFile(outDir+"/"+code+".list", ipcidrOut, 0755)
 			if err != nil {
 				fmt.Println(code, " output err: ", err)
 			}
-			err = meta.SaveMetaRuleSet(ipcidrOut, "ipcidr", "yaml", outDir+"/"+code+".mrs")
+			err = meta.SaveMetaRuleSet(ipcidrOut, "ipcidr", "text", outDir+"/"+code+".mrs")
 			if err != nil {
 				fmt.Println(code, " output err: ", err)
 			}
@@ -130,15 +130,16 @@ func convertIP(cmd *cobra.Command, args []string) error {
 			if err != nil {
 				fmt.Println(code, " output err: ", err)
 			}
-			err = os.WriteFile(outDir+"/classical/"+code+".list", []byte(strings.Join(cidrs, "\n")), 0755)
+			classicalOut = []byte(strings.Join(cidrs, "\n"))
+			err = os.WriteFile(outDir+"/classical/"+code+".list", classicalOut, 0755)
 			if err != nil {
 				fmt.Println(code, " output err: ", err)
 			}
-			// meta.SaveMetaRuleSet(classicalOut, "classical", "yaml", outDir+"/classical/"+code+".mrs")
+			// meta.SaveMetaRuleSet(classicalOut, "classical", "text", outDir+"/classical/"+code+".mrs")
 		}
 	case "sing-box":
 		for code, cidrs := range countryCIDRs {
-			ipcidrRule := []option.DefaultHeadlessRule{
+			ipcidrRule := []sing.DefaultHeadlessRule{
 				{
 					IPCIDR: cidrs,
 				},
