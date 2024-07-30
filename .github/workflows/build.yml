@@ -25,13 +25,13 @@ jobs:
       - name: Cross Compile
         run: |
           mkdir bin
-          GOOS=linux GOARCH=amd64 go build -o ./bin/convert-linux-amd64
-          GOOS=linux GOARCH=arm64 go build -o ./bin/convert-linux-arm64
-          GOOS=linux GOARCH=arm GOARM=7 go build -o ./bin/convert-linux-armv7
-          GOOS=darwin GOARCH=amd64 go build -o ./bin/convert-macos-amd64
-          GOOS=darwin GOARCH=arm64 go build -o ./bin/convert-macos-arm64
-          GOOS=windows GOARCH=amd64 go build -o ./bin/convert-windows-amd64.exe
-          GOOS=windows GOARCH=arm64 go build -o ./bin/convert-windows-arm64.exe
+          GOOS=linux GOARCH=amd64 go build -o ./bin/converter-linux-amd64
+          GOOS=linux GOARCH=arm64 go build -o ./bin/converter-linux-arm64
+          GOOS=linux GOARCH=arm GOARM=7 go build -o ./bin/converter-linux-armv7
+          GOOS=darwin GOARCH=amd64 go build -o ./bin/converter-macos-amd64
+          GOOS=darwin GOARCH=arm64 go build -o ./bin/converter-macos-arm64
+          GOOS=windows GOARCH=amd64 go build -o ./bin/converter-windows-amd64.exe
+          GOOS=windows GOARCH=arm64 go build -o ./bin/converter-windows-arm64.exe
 
       - uses: actions/upload-artifact@v4
         if: ${{  success() }}

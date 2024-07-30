@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"convert/output/sing"
+	"github.com/metacubex/meta-rules-converter/output/sing"
 
 	"github.com/sagernet/sing-box/option"
 	"github.com/spf13/cobra"

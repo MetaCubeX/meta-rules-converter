@@ -6,15 +6,15 @@ import (
 	"strings"
 	"sync"
 
-	"convert/output/meta"
-	"convert/output/sing"
+	"github.com/metacubex/meta-rules-converter/output/meta"
+	"github.com/metacubex/meta-rules-converter/output/sing"
 
 	"google.golang.org/protobuf/proto"
 	"gopkg.in/yaml.v3"
 
+	"github.com/metacubex/mihomo/component/geodata/router"
 	"github.com/sagernet/sing-box/option"
 	"github.com/spf13/cobra"
-	"github.com/v2fly/v2ray-core/v5/app/router/routercommon"
 )
 
 func init() {
@@ -57,17 +57,17 @@ func convertSite(cmd *cobra.Command, args []string) error {
 		mutex         sync.Mutex
 	)
 
-	list := routercommon.GeoSiteList{}
+	list := router.GeoSiteList{}
 	err = proto.Unmarshal(data, &list)
 	if err != nil {
 		return err
 	}
 	for _, entry := range list.Entry {
 		wg.Add(1)
-		go func(entry *routercommon.GeoSite) {
+		go func(entry *router.GeoSite) {
 			defer wg.Done()
 			code := strings.ToLower(entry.CountryCode)
-			marks := make(map[string][]*routercommon.Domain)
+			marks := make(map[string][]*router.Domain)
 			var (
 				d []string
 				c []string
@@ -83,18 +83,18 @@ func convertSite(cmd *cobra.Command, args []string) error {
 					}
 				}
 				switch domain.Type {
-				case routercommon.Domain_Full:
+				case router.Domain_Full:
 					d = append(d, domain.Value)
 					c = append(c, "DOMAIN,"+domain.Value)
 					f = append(f, domain.Value)
-				case routercommon.Domain_RootDomain:
+				case router.Domain_Domain:
 					d = append(d, "+."+domain.Value)
 					c = append(c, "DOMAIN-SUFFIX,"+domain.Value)
 					s = append(s, domain.Value)
-				case routercommon.Domain_Regex:
+				case router.Domain_Regex:
 					c = append(c, "DOMAIN-REGEX,"+domain.Value)
 					r = append(r, domain.Value)
-				case routercommon.Domain_Plain:
+				case router.Domain_Plain:
 					c = append(c, "DOMAIN-KEYWORD,"+domain.Value)
 					k = append(k, domain.Value)
 				}
@@ -123,18 +123,18 @@ func convertSite(cmd *cobra.Command, args []string) error {
 				)
 				for _, domain := range markEntries {
 					switch domain.Type {
-					case routercommon.Domain_Full:
+					case router.Domain_Full:
 						md = append(md, domain.Value)
 						mc = append(mc, "DOMAIN,"+domain.Value)
 						mf = append(mf, domain.Value)
-					case routercommon.Domain_RootDomain:
+					case router.Domain_Domain:
 						md = append(md, "+."+domain.Value)
 						mc = append(mc, "DOMAIN-SUFFIX,"+domain.Value)
 						ms = append(ms, domain.Value)
-					case routercommon.Domain_Regex:
+					case router.Domain_Regex:
 						mc = append(mc, "DOMAIN-REGEX,"+domain.Value)
 						mr = append(mr, domain.Value)
-					case routercommon.Domain_Plain:
+					case router.Domain_Plain:
 						mc = append(mc, "DOMAIN-KEYWORD,"+domain.Value)
 						mk = append(mk, domain.Value)
 					}

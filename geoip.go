@@ -7,15 +7,15 @@ import (
 	"strings"
 	"sync"
 
-	"convert/output/meta"
-	"convert/output/sing"
+	"github.com/metacubex/meta-rules-converter/output/meta"
+	"github.com/metacubex/meta-rules-converter/output/sing"
 
 	"google.golang.org/protobuf/proto"
 	"gopkg.in/yaml.v3"
 
+	"github.com/metacubex/mihomo/component/geodata/router"
 	"github.com/sagernet/sing-box/option"
 	"github.com/spf13/cobra"
-	"github.com/v2fly/v2ray-core/v5/app/router/routercommon"
 )
 
 type Rule struct {
@@ -63,14 +63,14 @@ func convertIP(cmd *cobra.Command, args []string) error {
 	countryCIDRs := make(map[string][]string)
 	classicalCIDRs := make(map[string][]string)
 
-	list := routercommon.GeoIPList{}
+	list := router.GeoIPList{}
 	err = proto.Unmarshal(data, &list)
 	if err != nil {
 		return err
 	}
 	for _, entry := range list.Entry {
 		wg.Add(1)
-		go func(entry *routercommon.GeoIP) {
+		go func(entry *router.GeoIP) {
 			defer wg.Done()
 			code := strings.ToLower(entry.CountryCode)
 			var (
