@@ -53,7 +53,7 @@ func convertIP(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	os.MkdirAll(outDir, 0755)
+	os.MkdirAll(outDir, 0777)
 
 	var (
 		wg    sync.WaitGroup
@@ -94,7 +94,7 @@ func convertIP(cmd *cobra.Command, args []string) error {
 
 	switch outType {
 	case "clash":
-		os.MkdirAll(outDir+"/classical", 0755)
+		os.MkdirAll(outDir+"/classical", 0777)
 
 		for code, cidrs := range countryCIDRs {
 			ipcidrMap := map[string][]string{
@@ -104,12 +104,12 @@ func convertIP(cmd *cobra.Command, args []string) error {
 			if err != nil {
 				fmt.Println(code, " coding err: ", err)
 			}
-			err = os.WriteFile(outDir+"/"+code+".yaml", ipcidrOut, 0755)
+			err = os.WriteFile(outDir+"/"+code+".yaml", ipcidrOut, 0666)
 			if err != nil {
 				fmt.Println(code, " output err: ", err)
 			}
 			ipcidrOut = []byte(strings.Join(cidrs, "\n"))
-			err = os.WriteFile(outDir+"/"+code+".list", ipcidrOut, 0755)
+			err = os.WriteFile(outDir+"/"+code+".list", ipcidrOut, 0666)
 			if err != nil {
 				fmt.Println(code, " output err: ", err)
 			}
@@ -126,12 +126,12 @@ func convertIP(cmd *cobra.Command, args []string) error {
 			if err != nil {
 				fmt.Println(code, " coding err: ", err)
 			}
-			err = os.WriteFile(outDir+"/classical/"+code+".yaml", classicalOut, 0755)
+			err = os.WriteFile(outDir+"/classical/"+code+".yaml", classicalOut, 0666)
 			if err != nil {
 				fmt.Println(code, " output err: ", err)
 			}
 			classicalOut = []byte(strings.Join(cidrs, "\n"))
-			err = os.WriteFile(outDir+"/classical/"+code+".list", classicalOut, 0755)
+			err = os.WriteFile(outDir+"/classical/"+code+".list", classicalOut, 0666)
 			if err != nil {
 				fmt.Println(code, " output err: ", err)
 			}

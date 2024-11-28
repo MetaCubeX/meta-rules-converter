@@ -47,7 +47,7 @@ func convertASN(cmd *cobra.Command, args []string) error {
 	}
 	defer db.Close()
 
-	os.MkdirAll(outDir, 0755)
+	os.MkdirAll(outDir, 0777)
 
 	countryCIDRs := make(map[uint][]string)
 	networks := db.Networks(maxminddb.SkipAliasedNetworks)
@@ -75,7 +75,7 @@ func convertASN(cmd *cobra.Command, args []string) error {
 				defer func() { <-semaphore }()
 				code := fmt.Sprintf("AS%d", number)
 
-				err := os.WriteFile(outDir+"/"+code+".list", []byte(strings.Join(cidrs, "\n")), 0755)
+				err := os.WriteFile(outDir+"/"+code+".list", []byte(strings.Join(cidrs, "\n")), 0666)
 				if err != nil {
 					fmt.Println(code, " output err: ", err)
 				}

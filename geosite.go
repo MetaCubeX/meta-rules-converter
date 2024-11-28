@@ -43,7 +43,7 @@ func convertSite(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	os.MkdirAll(outDir, 0755)
+	os.MkdirAll(outDir, 0777)
 
 	var (
 		domains       = make(map[string][]string)
@@ -157,7 +157,7 @@ func convertSite(cmd *cobra.Command, args []string) error {
 
 	switch outType {
 	case "clash":
-		os.MkdirAll(outDir+"/classical", 0755)
+		os.MkdirAll(outDir+"/classical", 0777)
 		for code, domain := range domains {
 			domainMap := map[string][]string{
 				"payload": domain,
@@ -166,12 +166,12 @@ func convertSite(cmd *cobra.Command, args []string) error {
 			if err != nil {
 				fmt.Println(code, " coding err: ", err)
 			}
-			err = os.WriteFile(outDir+"/"+code+".yaml", domainOut, 0755)
+			err = os.WriteFile(outDir+"/"+code+".yaml", domainOut, 0666)
 			if err != nil {
 				fmt.Println(code, " output err: ", err)
 			}
 			domainOut = []byte(strings.Join(domain, "\n"))
-			err = os.WriteFile(outDir+"/"+code+".list", domainOut, 0755)
+			err = os.WriteFile(outDir+"/"+code+".list", domainOut, 0666)
 			if err != nil {
 				fmt.Println(code, " output err: ", err)
 			}
@@ -186,12 +186,12 @@ func convertSite(cmd *cobra.Command, args []string) error {
 			if err != nil {
 				fmt.Println(code, " coding err: ", err)
 			}
-			err = os.WriteFile(outDir+"/classical/"+code+".yaml", classicalOut, 0755)
+			err = os.WriteFile(outDir+"/classical/"+code+".yaml", classicalOut, 0666)
 			if err != nil {
 				fmt.Println(code, " output err: ", err)
 			}
 			classicalOut = []byte(strings.Join(classical[code], "\n"))
-			err = os.WriteFile(outDir+"/classical/"+code+".list", classicalOut, 0755)
+			err = os.WriteFile(outDir+"/classical/"+code+".list", classicalOut, 0666)
 			if err != nil {
 				fmt.Println(code, " output err: ", err)
 			}
