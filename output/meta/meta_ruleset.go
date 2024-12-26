@@ -16,7 +16,7 @@ func SaveMetaRuleSet(buf []byte, b string, f string, outputPath string) error {
 	if err != nil {
 		return err
 	}
-	targetFile, err := os.OpenFile(outputPath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+	targetFile, err := os.OpenFile(outputPath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
 		return err
 	}

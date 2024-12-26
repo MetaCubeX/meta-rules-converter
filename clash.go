@@ -41,7 +41,7 @@ func convertClash(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	os.MkdirAll(outDir, 0755)
+	os.MkdirAll(outDir, 0777)
 
 	var (
 		domainFull    = make(map[string][]string)
@@ -110,7 +110,7 @@ func convertClash(cmd *cobra.Command, args []string) error {
 	switch outType {
 	case "sing-box":
 		for name, domain := range domainFull {
-			os.MkdirAll(outDir+"/"+name, 0755)
+			os.MkdirAll(outDir+"/"+name, 0777)
 			if len(domain) != 0 || len(domainSuffix[name]) != 0 || len(domainKeyword[name]) != 0 || len(domainRegex[name]) != 0 {
 				domainRule := []sing.DefaultHeadlessRule{
 					{
