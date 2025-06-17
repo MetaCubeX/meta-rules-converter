@@ -1,4 +1,4 @@
-package main
+package input
 
 import (
 	"fmt"
@@ -16,19 +16,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func init() {
-	commandSite.PersistentFlags().StringVarP(&inPath, "file", "f", "", "Input File Path")
-	commandSite.PersistentFlags().StringVarP(&outType, "type", "t", "", "Output Type")
-	commandSite.PersistentFlags().StringVarP(&outDir, "out", "o", "", "Output Path")
-	mainCommand.AddCommand(commandSite)
-}
-
-var commandSite = &cobra.Command{
-	Use:  "geosite",
-	RunE: convertSite,
-}
-
-func convertSite(cmd *cobra.Command, args []string) error {
+func ConvertSite(cmd *cobra.Command, inPath string, outType string, outDir string) error {
 	if inPath == "" {
 		inPath = "geosite.dat"
 	}

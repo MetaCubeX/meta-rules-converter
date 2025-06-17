@@ -1,4 +1,4 @@
-package main
+package input
 
 import (
 	"fmt"
@@ -18,19 +18,7 @@ type ASN struct {
 	AutonomousSystemOrganization string `maxminddb:"autonomous_system_organization"`
 }
 
-func init() {
-	commandASN.PersistentFlags().StringVarP(&inPath, "file", "f", "", "Input File Path")
-	commandASN.PersistentFlags().StringVarP(&outType, "type", "t", "", "Output Type")
-	commandASN.PersistentFlags().StringVarP(&outDir, "out", "o", "", "Output Path")
-	mainCommand.AddCommand(commandASN)
-}
-
-var commandASN = &cobra.Command{
-	Use:  "asn",
-	RunE: convertASN,
-}
-
-func convertASN(cmd *cobra.Command, args []string) error {
+func ConvertASN(cmd *cobra.Command, inPath string, outType string, outDir string) error {
 	if inPath == "" {
 		inPath = "GeoLite2-ASN.mmdb"
 	}

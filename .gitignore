@@ -5,6 +5,7 @@
 *.so
 *.dylib
 bin/*
+meta-rules-converter*
 
 # Test binary, build with `go test -c`
 *.test

@@ -1,4 +1,4 @@
-package main
+package input
 
 import (
 	"fmt"
@@ -26,19 +26,7 @@ type IPRule struct {
 	IPCIDR []string `json:"ip_cidr"`
 }
 
-func init() {
-	commandIP.PersistentFlags().StringVarP(&inPath, "file", "f", "", "Input File Path")
-	commandIP.PersistentFlags().StringVarP(&outType, "type", "t", "", "Output Type")
-	commandIP.PersistentFlags().StringVarP(&outDir, "out", "o", "", "Output Path")
-	mainCommand.AddCommand(commandIP)
-}
-
-var commandIP = &cobra.Command{
-	Use:  "geoip",
-	RunE: convertIP,
-}
-
-func convertIP(cmd *cobra.Command, args []string) error {
+func ConvertIP(cmd *cobra.Command, inPath string, outType string, outDir string) error {
 	if inPath == "" {
 		inPath = "geoip.dat"
 	}

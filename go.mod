@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	github.com/metacubex/mihomo v1.18.7
+	github.com/oschwald/maxminddb-golang v1.12.0
 	github.com/sagernet/sing v0.5.0-alpha.13 // v0.5.0-alpha.13 for mihomo v1.18.7
 	github.com/sagernet/sing-box v1.10.0-alpha.24 // v1.10.0-alpha.24 for sing v0.5.0-alpha.13
 	github.com/spf13/cobra v1.8.1
@@ -24,7 +25,6 @@ require (
 	github.com/miekg/dns v1.1.61 // indirect
 	github.com/onsi/ginkgo/v2 v2.10.0 // indirect
 	github.com/openacid/low v0.1.21 // indirect
-	github.com/oschwald/maxminddb-golang v1.12.0 // indirect
 	github.com/sagernet/fswatch v0.1.1 // indirect
 	github.com/sagernet/sing-dns v0.3.0-beta.12 // indirect
 	github.com/samber/lo v1.39.0 // indirect

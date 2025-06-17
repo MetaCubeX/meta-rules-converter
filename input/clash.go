@@ -1,4 +1,4 @@
-package main
+package input
 
 import (
 	"io"
@@ -14,19 +14,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-func init() {
-	commandClash.PersistentFlags().StringVarP(&inPath, "in", "i", "", "Input Path")
-	commandClash.PersistentFlags().StringVarP(&outType, "type", "t", "", "Output Type")
-	commandClash.PersistentFlags().StringVarP(&outDir, "out", "o", "", "Output Path")
-	mainCommand.AddCommand(commandClash)
-}
-
-var commandClash = &cobra.Command{
-	Use:  "clash",
-	RunE: convertClash,
-}
-
-func convertClash(cmd *cobra.Command, args []string) error {
+func ConvertClash(cmd *cobra.Command, inPath string, outType string, outDir string) error {
 	if inPath == "" {
 		inPath = "."
 	}
