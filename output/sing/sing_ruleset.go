@@ -14,9 +14,11 @@ import (
 
 type DefaultHeadlessRule = option.DefaultHeadlessRule
 
+const RuleSetVersion = C.RuleSetVersion2
+
 func SaveSingRuleSet(rules []DefaultHeadlessRule, outputPath string) error {
 	plainRuleSet := option.PlainRuleSetCompat{
-		Version: 2,
+		Version: RuleSetVersion,
 		Options: option.PlainRuleSet{
 			Rules: common.Map(rules, func(it option.DefaultHeadlessRule) option.HeadlessRule {
 				return option.HeadlessRule{
@@ -63,7 +65,7 @@ func saveSingBinaryRuleSet(ruleset *option.PlainRuleSetCompat, outputPath string
 	if err != nil {
 		return err
 	}
-	err = srs.Write(outputFile, ruleSet, false)
+	err = srs.Write(outputFile, ruleSet, RuleSetVersion)
 	if err != nil {
 		outputFile.Close()
 		os.Remove(outputPath)
